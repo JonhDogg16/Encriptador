@@ -1,14 +1,14 @@
-let btnEncriptar = document.querySelector(".btn-encriptar");
-let btnDesencriptar = document.querySelector(".btn-desencriptar");
-let cajatexto = document.querySelector(".cajatexto");
-let textoResultado = document.querySelector(".texto-resultado");
-let toyContainer = document.querySelector(".contenedormunieco");
-let textContainer = document.querySelector(".contenedor-parrafo");
-let btnCopiar = document.querySelector(".btn-copiar");
+const btnEncriptar = document.querySelector(".btn-encriptar");
+const btnDesencriptar = document.querySelector(".btn-desencriptar");
+const cajatexto = document.querySelector(".text textarea");
+const textoResultado = document.querySelector(".text-result");
+const resultContainer = document.querySelector(".result-container");
+const toyContainer = document.querySelector(".toy-container");
+const textContainer = document.querySelector(".info-text");
+const btnCopiar = document.querySelector(".btn-copy");
 
-// Crear un diccionario inverso para la desencriptación
 const vocales = ["a", "e", "i", "o", "u"];
-let encrypter = {
+const encrypter = {
   a: "ai",
   e: "enter",
   i: "imes",
@@ -19,10 +19,6 @@ const decrypter = Object.fromEntries(
   Object.entries(encrypter).map(([key, value]) => [value, key])
 );
 
-console.log(decrypter);
-console.log(typeof decrypter);
-
-// listeners
 eventListeners();
 
 function eventListeners() {
@@ -34,7 +30,7 @@ function eventListeners() {
 
 function encriptarTexto(mensaje) {
   limpiarPantalla();
-
+  if (mensaje.length === 0) return;
   let text = mensaje;
   let finalText = "";
 
@@ -51,12 +47,17 @@ function encriptarTexto(mensaje) {
       }
     }
   }
+
+  resultContainer.removeAttribute("hidden");
+  btnCopiar.removeAttribute("hidden");
   ocultarDiv();
+  console.log(finalText);
   return finalText;
 }
 
 function desencriptarTexto(mensaje) {
   limpiarPantalla();
+  if (mensaje.length === 0) return;
   let textoFinal = "";
   let i = 0;
 
@@ -99,11 +100,12 @@ function encriptar(e) {
   e.preventDefault();
 
   const textoAEncriptar = tomarTexto();
+  console.log(textoAEncriptar);
   textoResultado.innerText = encriptarTexto(textoAEncriptar);
 }
 
 function copiarTexto() {
-  const texto = document.querySelector(".texto-resultado").textContent;
+  const texto = document.querySelector(".text-result").textContent;
   navigator.clipboard.writeText(texto);
 }
 
